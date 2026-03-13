@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プライバシーポリシー - ZeroTapCalendar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0d14;
+            --bg-card: #111827;
+            --bg-card-hover: #1a2332;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-cyan: #22d3ee;
+            --accent-purple: #a78bfa;
+            --accent-gradient: linear-gradient(135deg, #22d3ee, #a78bfa);
+            --border-color: rgba(148, 163, 184, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        .glow-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .glow-bg::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(34, 211, 238, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .glow-bg::after {
+            content: '';
+            position: absolute;
+            bottom: -10%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(167, 139, 250, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 24px 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header .app-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .header .subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .header .last-updated {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 12px;
+        }
+
+        .section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            transition: background 0.3s ease;
+        }
+
+        .section:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .section h2 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section h2 .icon {
+            font-size: 22px;
+        }
+
+        .section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+
+        .section p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .section ul li {
+            color: var(--text-secondary);
+            font-size: 15px;
+            padding: 6px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .section ul li::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 14px;
+            width: 6px;
+            height: 6px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            margin-bottom: 12px;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+        }
+
+        .data-table th {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .data-table td {
+            color: var(--text-secondary);
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-cyan {
+            background: rgba(34, 211, 238, 0.15);
+            color: var(--accent-cyan);
+        }
+
+        .badge-purple {
+            background: rgba(167, 139, 250, 0.15);
+            color: var(--accent-purple);
+        }
+
+        .contact-box {
+            background: rgba(34, 211, 238, 0.05);
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 12px;
+        }
+
+        .contact-box a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        .contact-box a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .footer a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 40px 16px 60px;
+            }
+
+            .header h1 {
+                font-size: 26px;
+            }
+
+            .section {
+                padding: 24px 20px;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 8px 10px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="glow-bg"></div>
+
+    <div class="container">
+        <div class="header">
+            <span class="app-icon">📅</span>
+            <h1>プライバシーポリシー</h1>
+            <p class="subtitle">ZeroTapCalendar - AI日程調整＆予定管理</p>
+            <p class="last-updated">最終更新日: 2026年3月13日</p>
+        </div>
+
+        <!-- はじめに -->
+        <div class="section">
+            <h2><span class="icon">📋</span> はじめに</h2>
+            <p>
+                Leaders Incorporated（以下「当社」）は、ZeroTapCalendar（以下「本アプリ」）をご利用いただくユーザーの皆さまのプライバシーを尊重し、個人情報の保護に努めます。
+                本プライバシーポリシーは、本アプリが収集する情報、その使用方法、およびユーザーの権利について説明します。
+            </p>
+        </div>
+
+        <!-- 収集する情報 -->
+        <div class="section">
+            <h2><span class="icon">🔍</span> 収集する情報</h2>
+            <p>本アプリは、以下の種類のデータを収集・利用します。</p>
+
+            <h3>1. 音声データ</h3>
+            <p>
+                音声入力機能をご利用の際、マイクから取得した音声をAppleの音声認識サービス（Speech Framework）を用いてテキストに変換します。
+                音声データは端末上で処理され、当社のサーバーには保存されません。
+            </p>
+
+            <h3>2. 画像データ</h3>
+            <p>
+                カメラまたは写真ライブラリから取得した画像は、端末上のOCR（文字認識）処理にのみ使用されます。
+                画像データは当社のサーバーには送信・保存されません。
+            </p>
+
+            <h3>3. テキストデータ（AI処理）</h3>
+            <p>
+                音声認識またはOCRによって生成されたテキストは、予定情報を解析するためにOpenAI社のAPIに送信されます。
+                送信されるテキストには個人を特定する情報が含まれる可能性がありますが、当社はこのデータを保存しません。
+                OpenAI社のデータ取り扱いについては、<a href="https://openai.com/policies/privacy-policy" target="_blank"
+                    style="color: #22d3ee;">OpenAIのプライバシーポリシー</a>をご参照ください。
+            </p>
+
+            <h3>4. 連絡先情報</h3>
+            <p>
+                カレンダーイベントの参加者アイコン表示のために、端末の連絡先へアクセスします。
+                連絡先データは端末上でのみ使用され、外部に送信されることはありません。
+            </p>
+
+            <h3>5. カレンダーデータ</h3>
+            <p>
+                本アプリはiOS標準カレンダー（EventKit）にアクセスし、予定の読み取り・書き込み・削除を行います。
+                カレンダーデータは当社のサーバーには送信されません。
+            </p>
+
+            <h3>6. 購入情報</h3>
+            <p>
+                アプリ内課金（サブスクリプション）の購入処理はAppleのStoreKitを通じて行われます。
+                当社はクレジットカード番号等の支払い情報に一切アクセスできません。
+            </p>
+        </div>
+
+        <!-- サードパーティサービス -->
+        <div class="section">
+            <h2><span class="icon">🔗</span> サードパーティサービス</h2>
+            <p>本アプリは以下のサードパーティサービスを利用しています。</p>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>サービス</th>
+                        <th>提供元</th>
+                        <th>目的</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Google AdMob</td>
+                        <td>Google LLC</td>
+                        <td>バナー広告およびリワード広告の配信</td>
+                    </tr>
+                    <tr>
+                        <td>OpenAI API</td>
+                        <td>OpenAI, Inc.</td>
+                        <td>テキストからのカレンダー予定解析</td>
+                    </tr>
+                    <tr>
+                        <td>Apple StoreKit</td>
+                        <td>Apple Inc.</td>
+                        <td>アプリ内サブスクリプション処理</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>広告について</h3>
+            <p>
+                本アプリはGoogle AdMobを使用して広告を表示します。AdMobはパーソナライズド広告を配信するために、デバイスの広告識別子（IDFA）を使用する場合があります。
+                ユーザーはiOSの設定から「Appにトラッキングを要求する」を無効にすることで、広告のパーソナライズを拒否できます。
+                ZeroTap Proにアップグレードすると、すべての広告が非表示になります。
+            </p>
+            <p>
+                Google AdMobのプライバシーポリシーについては、<a href="https://policies.google.com/privacy" target="_blank"
+                    style="color: #22d3ee;">Googleのプライバシーポリシー</a>をご参照ください。
+            </p>
+        </div>
+
+        <!-- データの利用目的 -->
+        <div class="section">
+            <h2><span class="icon">🎯</span> データの利用目的</h2>
+            <p>収集したデータは、以下の目的でのみ使用されます。</p>
+            <ul>
+                <li>音声・画像からカレンダー予定を生成するための AI 解析処理</li>
+                <li>カレンダーイベントの作成・表示・編集・削除</li>
+                <li>参加者の連絡先情報（アイコン・氏名）の表示</li>
+                <li>広告の配信（無料ユーザーのみ）</li>
+                <li>アプリ内サブスクリプションの管理</li>
+                <li>予定前のリマインダー通知の送信</li>
+            </ul>
+        </div>
+
+        <!-- データの保存と共有 -->
+        <div class="section">
+            <h2><span class="icon">🔒</span> データの保存と共有</h2>
+            <ul>
+                <li>音声データ、画像データ、連絡先データ、カレンダーデータは端末上でのみ処理され、当社のサーバーには保存されません。</li>
+                <li>AI解析のために送信されたテキストデータは、当社のサーバーには保存されません。OpenAI社のデータ保持ポリシーに従います。</li>
+                <li>当社はユーザーの個人情報を第三者に販売、貸与、またはその他の方法で提供することはありません（法令に基づく場合を除く）。</li>
+                <li>広告配信に関するデータは、Google社のプライバシーポリシーに基づいて処理されます。</li>
+            </ul>
+        </div>
+
+        <!-- ユーザーの権利 -->
+        <div class="section">
+            <h2><span class="icon">👤</span> ユーザーの権利</h2>
+            <p>ユーザーは以下の権利を有します。</p>
+            <ul>
+                <li><strong>アクセス権限の管理</strong> — iOSの設定から、マイク・カメラ・写真・カレンダー・連絡先・通知の各権限をいつでも変更できます。</li>
+                <li><strong>広告トラッキングの拒否</strong> — iOSの「設定」>「プライバシーとセキュリティ」>「トラッキング」から広告トラッキングを無効にできます。</li>
+                <li><strong>データの削除</strong> — 本アプリをアンイストールすることで、端末上のすべてのアプリデータが削除されます。</li>
+                <li><strong>サブスクリプションの管理</strong> — iOSの「設定」>「Apple ID」>「サブスクリプション」からいつでも解約できます。</li>
+            </ul>
+        </div>
+
+        <!-- 子どものプライバシー -->
+        <div class="section">
+            <h2><span class="icon">🧒</span> 子どものプライバシー</h2>
+            <p>
+                本アプリは13歳未満の子どもを対象としていません。
+                当社は13歳未満の子どもから意図的に個人情報を収集することはありません。
+                万が一、13歳未満のお子さまの個人情報を収集したことが判明した場合は、速やかに削除いたします。
+            </p>
+        </div>
+
+        <!-- プライバシーポリシーの変更 -->
+        <div class="section">
+            <h2><span class="icon">📝</span> プライバシーポリシーの変更</h2>
+            <p>
+                当社は必要に応じて本プライバシーポリシーを更新する場合があります。
+                重要な変更がある場合は、本ページにて通知いたします。
+                変更後のプライバシーポリシーは、本ページに掲載した時点から効力を生じるものとします。
+            </p>
+        </div>
+
+        <!-- お問い合わせ -->
+        <div class="section">
+            <h2><span class="icon">📧</span> お問い合わせ</h2>
+            <p>本プライバシーポリシーに関するご質問やお問い合わせは、以下までご連絡ください。</p>
+            <div class="contact-box">
+                <p><strong>Leaders Incorporated</strong></p>
+                <p>メール: <a href="mailto:app@le-ders.co.jp">app@le-ders.co.jp</a></p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2026 Leaders Inc. All rights reserved.</p>
+            <p style="margin-top: 8px;">
+                <a href="#">ZeroTapCalendar</a>
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>
